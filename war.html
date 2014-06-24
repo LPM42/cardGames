@@ -1,56 +1,69 @@
 <script>
-    function Deck() {
-        this.cards = [];
-        this.count =  function(){
-            this.cards.length; 
-        }
-        this.init = function() {
-            for (s = 1; s <= 4; s++) {
-                for (r = 1; r <= 13; r++) {
-                    this.cards.push(new Card(r, s));
-                }
-            }
-        } 
-    }  
-
-    this.shuffle = function() {
-        var copy = [], n = this.cards.length, rand, take;
-
-        // While there remain elements to shuffle..
-        while(n) {
-
-            // Pick a remaining element...
-            rand = Math.floor(Math.random() * n--);
-
-            // And move it to the new array.
-            take = this.cards.splice(rand, 1)[0]
-            copy.push(take);
-        }
-
-        this.cards = copy;
-    }
-
-    function Card(rank, suit) {
-        this.rank = rank;
-        this.suit = suit; 
-        this.show = function() {
-            console.log(this.rank + " of " + this.suit);
-        }
-    }
-
-    d = new Deck();
-    d.init();
+  var computer = new Player("Computer");
+  var player = new Player(prompt("What is your name player?"));
+  var d = new Deck();
+  d.init();
+  d.shuffle();
+  d.distribute();
+  var play = new Play;
     
-    function War(card1, card2) {
-        if (card1 < card2) {
-            return("Player 1 wins!");
-        } 
-        else if (card1 > card2) {
-            return("Player 2 wins!");
-        }
-        else {
-            return("War!");
-        }
+  function Deck() {
+    this.cards = []; 
+    this.count = function() {
+      this.cards.length; 
     }
+    this.init = function() {
+      for (suit = 1; suit <= 4; suit++) {
+        for (rank = 1; rank <= 13; rank++) {
+          this.cards.push(new Card(rank, suit));
+        }
+      }
+    }
+    this.shuffle = function() {
+    var m = this.cards.length, t, rand;
+      while (m > 0) {
+        rand = Math.floor(Math.random() * m--);
+        t = this.cards[m];
+        this.cards[m] = this.cards[rand];
+        this.cards[rand] = t;
+      }
+    }
+    this.distribute = function() {
+      for (i = 1 ; i >= 29; i++) {
+        playerHand.push(d.cards.index[i]);
+        computerHand.push(d.cards.index[i]);
+      }
+    } 
+  }
 
+  function Card(rank, suit) {
+    this.rank = rank;
+    this.suit = suit; 
+      this.show = function() {
+        console.log(this.rank + " of " + this.suit);
+      }
+  }
+
+  function Player(name) {
+    this.name = name;
+    this.hand = [];
+    this.score = 0;
+  }
+
+  function Play() {
+    var i;
+    alert("Let's play " + player.name + "!");
+    for (i = 0; i <= player.hand.length; i++) {
+      alert("Your card is: " + player.hand[i].rank +". The computer card is: " + computer.hand[i].rank + ".");
+      if (player.hand[i].rank < computer.hand[i].rank) {
+        alert("You win " + player.name + "!")
+      }
+      else if (player.hand[i].rank > computer.hand[i].rank) {
+        alert("Sorry " + player.name +", the computer won this round.")
+      }
+      else {
+        alert("It is a tie.");
+      }
+    }
+  }
 </script>
