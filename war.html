@@ -4,7 +4,8 @@
   var d = new Deck();
   d.init();
   d.shuffle();
-  d.distribute();
+  player.hand = d.cards.slice(0, 26);
+  computer.hand = d.cards.slice(26, 52);
   var play = new Play;
     
   function Deck() {
@@ -27,12 +28,6 @@
         this.cards[m] = this.cards[rand];
         this.cards[rand] = t;
       }
-    }
-    this.distribute = function() {
-      for (i = 1 ; i >= 29; i++) {
-        playerHand.push(d.cards.index[i]);
-        computerHand.push(d.cards.index[i]);
-      }
     } 
   }
 
@@ -54,15 +49,15 @@
     var i;
     alert("Let's play " + player.name + "!");
     for (i = 0; i <= player.hand.length; i++) {
-      alert("Your card is: " + player.hand[i].rank +". The computer card is: " + computer.hand[i].rank + ".");
+      console.log("Your card is: " + player.hand[i].rank +". The computer card is: " + computer.hand[i].rank + ".");
       if (player.hand[i].rank < computer.hand[i].rank) {
-        alert("You win " + player.name + "!")
+        console.log("You win " + player.name + "!");
       }
       else if (player.hand[i].rank > computer.hand[i].rank) {
-        alert("Sorry " + player.name +", the computer won this round.")
+        console.log("Sorry " + player.name +", the computer won this round.");
       }
       else {
-        alert("It is a tie.");
+        console.log("It is a tie.");
       }
     }
   }
